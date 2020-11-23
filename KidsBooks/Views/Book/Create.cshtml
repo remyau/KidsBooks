@@ -1,0 +1,56 @@
+﻿@model KidsBooks.View_Models.BooksViewModel
+@{
+    ViewBag.title = "Create New Book";
+}
+
+<form asp-controller="Book" asp-action="Create" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="@Model.book.Name"> </label>
+        <input asp-for="@Model.book.Name" class="form-control col-sm-8" />
+        <span asp-validation-for="@Model.book.Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.book.Author"></label>
+        <input asp-for="@Model.book.Author" class="form-control col-sm-8" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.book.CategoryId"></label>
+        <select asp-for="@Model.book.CategoryId" asp-items="@(new SelectList(Model.category,"Id","Name"))"
+                class="form-control col-sm-8">
+            <option value=" ">Please select</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="book.Lang"></label>
+        <select asp-for="book.Lang" asp-items="Html.GetEnumSelectList<Languages>()"
+                class="form-control col-sm-8"></select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.book.Publisher"></label>
+        <input asp-for="@Model.book.Publisher" class="form-control col-sm-8" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.book.Date_Published"></label>
+        <input asp-for="@Model.book.Date_Published" class="form-control col-sm-8" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.book.Description"></label>
+        <textarea asp-for="@Model.book.Description" class="form-control col-sm-8"></textarea>
+    </div>
+
+    <div class="form-group">
+        <button class="btn btn-info btn-sm" type="submit">Save</button>
+        <a class="btn btn-info btn-sm" asp-controller="Book" asp-action="Index">Cancel</a>
+    </div>
+
+</form>
+
+

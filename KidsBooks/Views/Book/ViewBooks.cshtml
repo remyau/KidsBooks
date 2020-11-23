@@ -1,0 +1,30 @@
+﻿@model KidsBooks.View_Models.BooksShowViewModel 
+
+
+@{ 
+    ViewBag.Title = "ViewBooks";
+}
+
+<div class="card w-75 mt-5" >
+    <div class="card-header" style="background-color:cadetblue">
+        <h4>Book Details</h4>
+    </div>
+
+    <div class="card-body" >
+        <div class="card-title">
+            <h3 style="text-align:center; color:darkcyan"> @Model.book.Name</h3>
+        </div>
+        <div class="card-text">
+            <p>Author: @Model.book.Author</p>
+            <p>Category: @Model.CategoryName</p>
+            <p>Language: @Model.book.Lang</p>
+            <p>Publisher: @Model.book.Publisher</p>
+            <p>Date Published: @Model.book.Date_Published.ToShortDateString()</p>
+            <p>Description: </p>
+            <p>@Model.book.Description</p>
+        </div>
+    </div>
+    <div class="card-footer">
+        <a asp-controller="Book" asp-action="Index" class="btn btn-info btn-sm float-sm-right">Back</a>
+    </div>
+</div>

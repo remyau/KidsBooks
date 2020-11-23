@@ -1,0 +1,39 @@
+﻿@model KidsBooks.Models.Book
+
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<form asp-controller="Book" asp-action="Delete" method="post">
+    <div class="card text-center w-75 mt-5">
+        <div class="card-header" style="background-color:cadetblue">
+            Book Details
+        </div>
+
+        <div class="card-body">
+            <div class="card-title">
+
+            </div>
+            <div class="card-text">
+                <div>
+                    <label>Name : @Model.Name</label>
+                </div>
+                <div>
+                    <label >Author : @Model.Author </label>
+                </div>
+                <div>
+                    <label >Publisher : @Model.Publisher</label>
+                </div>
+                <div>
+                    <label >Published Date : @Model.Date_Published.ToShortDateString()</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <button class="btn btn-info btn-sm">Delete</button>
+            <a asp-controller="Book" asp-action="Index" class="btn btn-info btn-sm">Cancel</a>
+        </div>
+    </div>
+</form>
