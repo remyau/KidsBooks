@@ -7,10 +7,10 @@ namespace KidsBooks.Models
 {
     public interface IBooksRepository
     {
-        IEnumerable<Book> GetAllBooks();
-        Book AddBook(Book book);
-        Book GetBook(int Id);
-        Book DeleteBook(int Id);
-        Book Update(Book bookChanges);
+        Task<IEnumerable<Book>> GetAllBooksAsync();
+        Task<Book> AddBookAsync(Book book);
+        Task<Book> GetBookAsync(int Id);
+        Task<Book> DeleteBookAsync(int Id);
+        Task<Book> UpdateAsync(Book bookChanges);
     }
 }

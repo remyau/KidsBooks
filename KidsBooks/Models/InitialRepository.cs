@@ -15,14 +15,14 @@ namespace KidsBooks.Models
             this.context = Context;
         }
 
-        List<Category> IInitialRepository.GetAllCategories()
+        public async Task<List<Category>> GetAllCategoriesAsync()
         {
-            return context.Categories.ToList(); ;
+            return await Task.Run(()=> context.Categories.ToList()) ;
         }
 
-        Category IInitialRepository.GetCategory(int Id)
+        public async Task<Category> GetCategoryAsync(int Id)
         {
-            return context.Categories.SingleOrDefault(c => c.Id == Id);
+            return await Task.Run(()=> context.Categories.SingleOrDefault(c => c.Id == Id));
         }
     }
 }

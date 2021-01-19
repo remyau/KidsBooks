@@ -7,7 +7,7 @@ namespace KidsBooks.Models
 {
     public interface IInitialRepository
     {
-        List<Category> GetAllCategories();
-        Category GetCategory(int Id);
+        Task<List<Category>> GetAllCategoriesAsync();
+        Task<Category> GetCategoryAsync(int Id);
     }
 }

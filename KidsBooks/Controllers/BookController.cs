@@ -20,16 +20,17 @@ namespace KidsBooks.Controllers
         }
 
         [Route("Book")]        
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var bookModel = _iBooksRepository.GetAllBooks();
+            var bookModel = await _iBooksRepository.GetAllBooksAsync();
             return View(bookModel);
         }
 
         [HttpGet]
-        public ViewResult Create()
+        [Route("Create")]
+        public async Task<ViewResult> Create()
         {
-            var categories = _iInitialRepository.GetAllCategories();
+            var categories = await _iInitialRepository.GetAllCategoriesAsync();
             var bookViewModel = new BooksViewModel
             {
                 category = categories
@@ -38,11 +39,11 @@ namespace KidsBooks.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(BooksViewModel bookViewModel)
+        public async Task<IActionResult> Create(BooksViewModel bookViewModel)
         {
             if (ModelState.IsValid)
             {
-                Book _book = _iBooksRepository.AddBook(bookViewModel.book);
+                Book _book = await _iBooksRepository.AddBookAsync(bookViewModel.book);
                 return RedirectToAction("Index");
             }
 
@@ -50,10 +51,10 @@ namespace KidsBooks.Controllers
         }
 
         [HttpGet]
-        public ViewResult Edit(int Id)
+        public async Task<ViewResult> Edit(int Id)
         {
-            Book _book = _iBooksRepository.GetBook(Id);
-            var _category = _iInitialRepository.GetAllCategories();
+            Book _book = await _iBooksRepository.GetBookAsync(Id);
+            var _category = await _iInitialRepository.GetAllCategoriesAsync();
             var bookViewModel = new BooksViewModel
             {
                 book=_book,
@@ -63,11 +64,11 @@ namespace KidsBooks.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(BooksViewModel bookViewModel)
+        public async Task<IActionResult> Edit(BooksViewModel bookViewModel)
         {
             if (ModelState.IsValid)
             {
-                Book book = _iBooksRepository.GetBook(bookViewModel.book.Id);
+                Book book = await _iBooksRepository.GetBookAsync(bookViewModel.book.Id);
                 book.Name = bookViewModel.book.Name;
                 book.Author = bookViewModel.book.Author;
                 book.CategoryId = bookViewModel.book.CategoryId;
@@ -75,7 +76,7 @@ namespace KidsBooks.Controllers
                 book.Publisher = bookViewModel.book.Publisher;
                 book.Date_Published = bookViewModel.book.Date_Published;
 
-                _iBooksRepository.Update(book);
+                await _iBooksRepository.UpdateAsync(book);
                 return RedirectToAction("Index");
             }
 
@@ -83,27 +84,27 @@ namespace KidsBooks.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete(int Id)
+        public async Task<IActionResult> Delete(int Id)
         {
-            Book book = _iBooksRepository.GetBook(Id);
+            Book book = await _iBooksRepository.GetBookAsync(Id);
             return View(book);
         }
 
         [HttpPost]
-        public IActionResult Delete(Book bookDelete)
+        public async Task<IActionResult> Delete(Book bookDelete)
         {
             if (bookDelete != null)
             {
-                _iBooksRepository.DeleteBook(bookDelete.Id);
+                await _iBooksRepository.DeleteBookAsync(bookDelete.Id);
             }
             return RedirectToAction("Index");
         }
 
-        public ViewResult ViewBooks(int Id)
+        public async Task<ViewResult> ViewBooks(int Id)
         {
-            Book book = _iBooksRepository.GetBook(Id);
-            var category = _iInitialRepository.GetAllCategories();
-            Category cat1 = _iInitialRepository.GetCategory(book.CategoryId);
+            Book book = await _iBooksRepository.GetBookAsync(Id);
+            var category = await _iInitialRepository.GetAllCategoriesAsync();
+            Category cat1 = await _iInitialRepository.GetCategoryAsync(book.CategoryId);
 
             BooksShowViewModel bookViewModel = new BooksShowViewModel
             {

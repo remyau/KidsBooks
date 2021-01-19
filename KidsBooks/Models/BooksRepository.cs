@@ -14,42 +14,43 @@ namespace KidsBooks.Models
             this._context = Context;
         }
 
-        public Book AddBook(Book book)
+        public async Task<Book> AddBookAsync(Book book)
         {
             book.Date_Added = DateTime.Now;
-            _context.Books.Add(book);
-            _context.SaveChanges();
+            await _context.Books.AddAsync(book);
+            await _context.SaveChangesAsync();
             return book;
         }
 
-        public Book GetBook(int Id)
+        public async Task<Book> GetBookAsync(int Id)
         {
-            return _context.Books.SingleOrDefault(c=> c.Id==Id);
+            return await Task.Run(() =>
+            _context.Books.SingleOrDefault(c=> c.Id==Id));
         }
 
-        public Book Update(Book bookChanges)
+        public async Task<Book> UpdateAsync(Book bookChanges)
         {
             var book = _context.Books.Attach(bookChanges);
             book.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return bookChanges;
         }
 
-        Book IBooksRepository.DeleteBook(int Id)
+        public async Task<Book> DeleteBookAsync(int Id)
         {
             Book book = _context.Books.Find(Id);
             if(book!=null)
             {
-                _context.Books.Remove(book);
-                _context.SaveChanges();
+                await Task.Run(()=> _context.Books.Remove(book));
+                await _context.SaveChangesAsync();
             }
 
             return book;
         }
 
-        IEnumerable<Book> IBooksRepository.GetAllBooks()
+        public async Task<IEnumerable<Book>> GetAllBooksAsync()
         {
-            return _context.Books;
+            return await Task.Run(()=> _context.Books);
         }
         
     }
