@@ -27,7 +27,7 @@ namespace KidsBooks.Controllers
         }
 
         [HttpGet]
-        [Route("Create")]
+        [Route("Book/Create")]
         public async Task<ViewResult> Create()
         {
             var categories = await _iInitialRepository.GetAllCategoriesAsync();

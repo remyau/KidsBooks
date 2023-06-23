@@ -50,7 +50,7 @@ namespace KidsBooks.Models
 
         public async Task<IEnumerable<Book>> GetAllBooksAsync()
         {
-            return await Task.Run(()=> _context.Books);
+            return await Task.Run(()=> _context.Books.Where(x=> x.CategoryId!=9).ToList());
         }
         
     }
